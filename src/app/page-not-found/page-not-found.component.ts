@@ -1,3 +1,5 @@
+import { AuthService } from './../auth/auth.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found.component.scss']
 })
 export class PageNotFoundComponent implements OnInit {
-
-  constructor() { }
+  constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit() {
-  }
+    if (this.authService.isUserSignedIn()) {
+      // Get the redirect URL from our auth service
+      // If no redirect has been set, use the default
+      const redirect = this.authService.redirectUrl
+        ? this.router.parseUrl(this.authService.redirectUrl)
+        : '/layout';
 
+      // Redirect the user
+      this.router.navigateByUrl(redirect);
+    }
+  }
 }

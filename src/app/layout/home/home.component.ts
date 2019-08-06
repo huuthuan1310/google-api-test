@@ -1,7 +1,7 @@
+import { AuthService } from './../../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AppService } from './../app.service';
-import { DriveResource } from './../google-drive-resource';
 import { Component, OnInit } from '@angular/core';
+import { DriveResource } from 'src/app/resources/google-drive-resource';
 
 @Component({
   selector: 'app-home',
@@ -9,19 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
   constructor(
-    private appService: AppService,
+    private authService: AuthService,
     private driveResource: DriveResource
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.driveResource.getList(this.appService.getToken()).subscribe(() => { }, (err: HttpErrorResponse) => {
-      console.log(err);
-      if (err.status === 401) {
-        this.appService.signOut();
+    this.driveResource.getList(this.authService.getToken()).subscribe(
+      () => {},
+      (err: HttpErrorResponse) => {
+        console.log(err);
+        if (err.status === 401) {
+          this.authService.signOut();
+        }
       }
-    });
+    );
   }
-
 }
