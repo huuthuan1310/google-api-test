@@ -1,0 +1,25 @@
+import { LoginComponent } from './login/login.component';
+import { LayoutModule } from './layout/layout.module';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+
+const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'layout',
+    loadChildren: () => LayoutModule,
+    canLoad: []
+  },
+  {
+    path: 'login', component: LoginComponent
+  },
+  { path: '**', component: PageNotFoundComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
