@@ -45,7 +45,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+    if (url) {
+      sessionStorage.setItem('redirectUrl', url);
+    }
+    this.authService.redirectUrl = url
+      ? url
+      : sessionStorage.getItem('redirectUrl');
 
     // Create a dummy session id
     const sessionId = 123456789;
@@ -58,7 +63,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     };
 
     // Navigate to the login page with extras
-    this.router.navigate(['/login'], navigationExtras);
+    // this.router.navigate(['/login'], navigationExtras);
+    this.router.navigate(['/login']);
     return false;
   }
 }

@@ -16,7 +16,7 @@ export class PageNotFoundComponent implements OnInit {
       // If no redirect has been set, use the default
       const redirect = this.authService.redirectUrl
         ? this.router.parseUrl(this.authService.redirectUrl)
-        : '/layout';
+        : '';
 
       // Redirect the user
       this.router.navigateByUrl(redirect);

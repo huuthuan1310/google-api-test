@@ -8,7 +8,7 @@ import GoogleUser = gapi.auth2.GoogleUser;
   providedIn: 'root'
 })
 export class AuthService {
-  public static readonly SESSION_STORAGE_KEY: string = 'accessToken';
+  public SESSION_STORAGE_KEY = 'accessToken';
   private user: GoogleUser = undefined;
 
   // store the URL so we can redirect after logging in
@@ -32,18 +32,25 @@ export class AuthService {
   }
 
   public isUserSignedIn(): boolean {
-    return !_.isEmpty(sessionStorage.getItem(AuthService.SESSION_STORAGE_KEY));
+    return !_.isEmpty(sessionStorage.getItem(this.SESSION_STORAGE_KEY));
   }
 
   // TODO: Rework
   public signOut(): void {
     this.googleAuthService.getAuth().subscribe(auth => {
       try {
-        auth.signOut();
+        auth.signOut().then(
+          res => {
+            this.ngZone.run(() => {
+              sessionStorage.removeItem(this.SESSION_STORAGE_KEY);
+              this.router.navigateByUrl('/login');
+            });
+          },
+          err => console.log(err)
+        );
       } catch (e) {
         console.error(e);
       }
-      sessionStorage.removeItem(AuthService.SESSION_STORAGE_KEY);
     });
   }
 
@@ -51,10 +58,10 @@ export class AuthService {
     this.ngZone.run(() => {
       this.user = res;
       sessionStorage.setItem(
-        AuthService.SESSION_STORAGE_KEY,
+        this.SESSION_STORAGE_KEY,
         res.getAuthResponse().access_token
       );
-      this.router.navigate([this.redirectUrl]);
+      this.router.navigateByUrl('');
     });
   }
 
@@ -71,13 +78,11 @@ export class AuthService {
   }
 
   public getToken(): string {
-    const token: string = sessionStorage.getItem(
-      AuthService.SESSION_STORAGE_KEY
-    );
+    const token: string = sessionStorage.getItem(this.SESSION_STORAGE_KEY);
     if (!token) {
       throw new Error('no token set , authentication required');
     }
-    return sessionStorage.getItem(AuthService.SESSION_STORAGE_KEY);
+    return sessionStorage.getItem(this.SESSION_STORAGE_KEY);
   }
 }
 

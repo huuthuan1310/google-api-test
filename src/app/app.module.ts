@@ -40,6 +40,7 @@ const gapiClientConfig: NgGapiClientConfig = {
       useValue: gapiClientConfig
     }),
     HttpClientModule,
+    LayoutModule,
     AuthModule,
     AppRoutingModule
   ],
