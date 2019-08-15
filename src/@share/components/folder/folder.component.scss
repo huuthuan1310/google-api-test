@@ -1,0 +1,20 @@
+.folder {
+  &--container {
+    width: 250px;
+    padding: 5px 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &--text {
+    padding: 0 12px;
+    flex: 1;
+    display: inline-block;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+  }
+}

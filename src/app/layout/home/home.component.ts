@@ -1,3 +1,4 @@
+import { Folder } from 'src/@core/models';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,6 +11,7 @@ import { DriveResource } from 'src/app/resources/google-drive-resource';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  folders: Folder[] = [];
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -18,7 +20,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.driveResource.getList(this.authService.getToken()).subscribe(
-      () => {},
+      res => {
+        this.folders = res.files.map((x: any) => {
+          return { id: x.id, name: x.name };
+        });
+      },
       (err: HttpErrorResponse) => {
         console.log(err);
         if (err.status === 401) {

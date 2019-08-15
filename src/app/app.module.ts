@@ -1,3 +1,5 @@
+import { CoreModule } from './../@core/core.modules';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -42,7 +44,9 @@ const gapiClientConfig: NgGapiClientConfig = {
     HttpClientModule,
     LayoutModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CoreModule
   ],
   bootstrap: [AppComponent]
 })
