@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 const gapiClientConfig: NgGapiClientConfig = {
   client_id:
-    '402271985389-i1tptife0499i4bplh8vspio7t38ls5f.apps.googleusercontent.com',
+    '402271985389-atpk31e9attb5s1vbs0u38dunn5uoah9.apps.googleusercontent.com',
   discoveryDocs: [
     'https://analyticsreporting.googleapis.com/$discovery/rest?version=v4'
   ],
