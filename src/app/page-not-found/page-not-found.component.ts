@@ -11,15 +11,15 @@ export class PageNotFoundComponent implements OnInit {
   constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit() {
-    if (this.authService.isUserSignedIn()) {
-      // Get the redirect URL from our auth service
-      // If no redirect has been set, use the default
-      const redirect = this.authService.redirectUrl
-        ? this.router.parseUrl(this.authService.redirectUrl)
-        : '';
+    // Get the redirect URL from our auth service
+    // If no redirect has been set, use the default
+    const redirect = this.authService.redirectUrl
+      ? this.router.parseUrl(this.authService.redirectUrl)
+      : '';
 
-      // Redirect the user
+    // Redirect the user
+    setTimeout(() => {
       this.router.navigateByUrl(redirect);
-    }
+    }, 5000);
   }
 }
